@@ -5,16 +5,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-naya-secret-key-hai-yeh-change-ho-gaya'
+SECRET_KEY = 'django-insecure-y#_3k8(vw#7h!q@=f^4m-p*l5x+9z&c2b1a!s$d%g#j@k'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-# --- YE LINE ADD KI GAYI HAI ERROR HATANE KE LIYE ---
 CSRF_TRUSTED_ORIGINS = ['https://helpdesk-33u6.onrender.com']
-# -----------------------------------------------------
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -80,3 +77,20 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ============================================
+# AUTO ADMIN USER CREATOR CODE
+# Jab server start hoga, ye code check karega.
+# ============================================
+def create_superuser():
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    if not User.objects.filter(username='admin').exists():
+        print("Creating superuser...")
+        User.objects.create_superuser('admin', password='admin123')
+        print("Superuser created: admin / admin123")
+    else:
+        print("Superuser already exists.")
+
+# Ye line zaroori hai taaki server start hone par ye function chale
+create_superuser()
