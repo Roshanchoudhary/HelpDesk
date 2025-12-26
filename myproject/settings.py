@@ -12,6 +12,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# --- YE LINE ADD KI GAYI HAI ERROR HATANE KE LIYE ---
+CSRF_TRUSTED_ORIGINS = ['https://helpdesk-33u6.onrender.com']
+# -----------------------------------------------------
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
