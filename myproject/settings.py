@@ -77,23 +77,3 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# ============================================
-# AUTO ADMIN USER CREATOR (TEMPORARY PASSWORD)
-# ============================================
-def ensure_superuser():
-    from django.contrib.auth import get_user_model
-    User = get_user_model()
-    
-    try:
-        # Pehle check karo agar user hai toh password reset kar do
-        u = User.objects.get(username='admin')
-        u.set_password('temp123')
-        u.save()
-        print("Admin password reset to: temp123")
-    except User.DoesNotExist:
-        # User nahi hai toh banao
-        User.objects.create_superuser('admin', password='temp123')
-        print("Admin user created: admin / temp123")
-
-ensure_superuser()
