@@ -79,18 +79,21 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ============================================
-# AUTO ADMIN USER CREATOR CODE
-# Jab server start hoga, ye code check karega.
+# AUTO ADMIN USER CREATOR (TEMPORARY PASSWORD)
 # ============================================
-def create_superuser():
+def ensure_superuser():
     from django.contrib.auth import get_user_model
     User = get_user_model()
-    if not User.objects.filter(username='admin').exists():
-        print("Creating superuser...")
-        User.objects.create_superuser('admin', password='admin123')
-        print("Superuser created: admin / admin123")
-    else:
-        print("Superuser already exists.")
+    
+    try:
+        # Pehle check karo agar user hai toh password reset kar do
+        u = User.objects.get(username='admin')
+        u.set_password('temp123')
+        u.save()
+        print("Admin password reset to: temp123")
+    except User.DoesNotExist:
+        # User nahi hai toh banao
+        User.objects.create_superuser('admin', password='temp123')
+        print("Admin user created: admin / temp123")
 
-# Ye line zaroori hai taaki server start hone par ye function chale
-create_superuser()
+ensure_superuser()
